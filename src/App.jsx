@@ -16,7 +16,7 @@ const SpaceBattleSimulator = () => {
   const drawSound = new Audio('/sounds/Draw.wav');
 
   // Set initial volume levels (optional)
-  fireSound.volume = 0.4; // 50% volume for fire sound
+  fireSound.volume = 0.3; // 50% volume for fire sound
   winSound.volume = 0.7;  // 70% volume for win sound
   loseSound.volume = 0.7; // 70% volume for lose sound
 
