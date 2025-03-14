@@ -1,14 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+
 const SpaceBattleSimulator = () => {
   const [playerHealth, setPlayerHealth] = useState(100);
   const [enemyHealth, setEnemyHealth] = useState(100);
   const [gameStatus, setGameStatus] = useState('active');
   const [damageRangeP] = useState([5, 20]);
-  const [damageRangeE] = useState([5, 20]); //rigged so enemys damage is always more than players
+  const [damageRangeE] = useState([5, 20]);
+
+  // Sound effect objects
+  const fireSound = new Audio('/sounds/LaserGunFire.wav');
+  const winSound = new Audio('/sounds/Winning.wav');
+  const loseSound = new Audio('/sounds/Losing.wav');
+  const drawSound = new Audio('/sounds/Draw.wav');
+
+  // Set initial volume levels (optional)
+  fireSound.volume = 0.4; // 50% volume for fire sound
+  winSound.volume = 0.7;  // 70% volume for win sound
+  loseSound.volume = 0.7; // 70% volume for lose sound
 
   const handleFire = () => {
+    fireSound.play(); // Play fire sound effect
+
     const playerDamage = Math.floor(Math.random() * (damageRangeP[1] - damageRangeP[0] + 1)) + damageRangeP[0];
     const enemyDamage = Math.floor(Math.random() * (damageRangeE[1] - damageRangeE[0] + 1)) + damageRangeE[0];
 
@@ -20,10 +34,13 @@ const SpaceBattleSimulator = () => {
 
     if (newPlayerHealth <= 0 && newEnemyHealth <= 0) {
       setGameStatus('draw');
+      drawSound.play();
     } else if (newPlayerHealth <= 0) {
       setGameStatus('lose');
+      loseSound.play(); // Play lose sound effect
     } else if (newEnemyHealth <= 0) {
       setGameStatus('win');
+      winSound.play(); // Play win sound effect
     }
   };
 
@@ -50,6 +67,12 @@ const SpaceBattleSimulator = () => {
 
   return (
     <>
+      {/* Background Music */}
+      {/* <audio id="bg-music" loop autoPlay>
+        <source src="/sounds/Background.wav" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio> */}
+
       <div className="space-background"></div> {/* Space Background with Stars */}
 
       <div className="battle-container">
